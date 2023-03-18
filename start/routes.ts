@@ -1,22 +1,29 @@
 import Route from '@ioc:Adonis/Core/Route'
+import User from 'App/Models/User'
+import Hash from '@ioc:Adonis/Core/Hash'
 
-Route.get('/hello', async () => {})
+
+Route.get('/home', async () => {})
+
 
 Route.post('login', async ({ auth, request, response }) => {
   const email = request.input('email')
   const password = request.input('password')
 
-  try {
-    const token = await auth.use('api').attempt(email, password)
-    return token
-  } catch {
-    return response.unauthorized('Credenciais Invalidas')
-  }
-})
+  // Lookup user manually
+  const user = await User
+    .query()
+    .where('email', email)
+    .firstOrFail()
 
-Route.get('dashboard', async ({ auth }) => {
-  await auth.use('api').authenticate()
-  return 'Ola '+auth.user.nome+', você está autenticado(a)!'
+  // Verify password
+  if (!(await Hash.verify(user.password, password))) {
+    return response.badRequest('Senha incorreta!!')
+  }
+
+  // Create session
+  await auth.use('api').login(user)
+  return 'Olá '+auth.user.nome
 })
 
 Route.resource('users', 'UsersController')
