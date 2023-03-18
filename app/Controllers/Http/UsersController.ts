@@ -9,12 +9,12 @@ export default class UsersController {
 
   public async store({ request }: HttpContextContract) {
 
-  const body = request.only(['nome', 'email', 'senha', 'matricula', 'nivel', 'datanascimento'])
+  const body = request.only(['nome', 'email', 'password', 'matricula', 'nivel', 'datanascimento'])
   
   const user = await User.create({
   nome: body.nome,
   email: body.email,
-  senha: body.senha,
+  password: body.password,
   matricula: body.matricula,
   nivel: body.nivel,
   datanascimento: body.datanascimento
@@ -25,15 +25,24 @@ console.log(user.$isPersisted) // true
     return user
   }
 
-  public async show({}: HttpContextContract) {
-    return 'Show'
+  public async show({ request }: HttpContextContract) {
+    const Userid = request.param('id')
+    const user = await User.findOrFail(Userid)
+    return user
   }
 
-  public async update({}: HttpContextContract) {
-    return 'update'
+  public async update({ request }: HttpContextContract) {
+    const Userid = request.param('id')
+    const body = request.only(['nome', 'email', 'password', 'matricula', 'nivel', 'datanascimento'])
+    const user = await User.findOrFail(Userid)
+    await user.merge(body).save()
+    return user
   }
 
-  public async destroy({}: HttpContextContract) {
-    return 'destroy'
+  public async destroy({ request }: HttpContextContract) {
+    const Userid = request.param('id')
+    const user = await User.findOrFail(Userid)
+    await user.delete()
+    return 'Usúario Deletado'
   }
 }
