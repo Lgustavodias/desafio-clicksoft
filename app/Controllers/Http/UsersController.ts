@@ -7,14 +7,17 @@ export default class UsersController {
     return user
   }
 
-  public async store({}: HttpContextContract) {
+  public async store({ request }: HttpContextContract) {
 
-const user = await User.create({
-  nome: 'Gustavo',
-  email: 'gustavo@adonisjs.com',
-  senha: '12345',
-  matricula: '1l25b',
-  nivel:'professor',
+  const body = request.only(['nome', 'email', 'senha', 'matricula', 'nivel', 'datanascimento'])
+  
+  const user = await User.create({
+  nome: body.nome,
+  email: body.email,
+  senha: body.senha,
+  matricula: body.matricula,
+  nivel: body.nivel,
+  datanascimento: body.datanascimento
 })
 
 console.log(user.$isPersisted) // true
