@@ -6,13 +6,13 @@ export default class Sala extends BaseModel {
   public id: number
 
   @column()
-  public numeracaoSala: number
+  public numeracao_sala: number
 
   @column()
-  public capacidadeSala: number
+  public capacidade_sala: number
 
   @column()
-  public idProfessor: number
+  public id_professor: number
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

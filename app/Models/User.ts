@@ -12,7 +12,7 @@ export default class User extends BaseModel {
   @column({ serializeAs: null })
   public password: string
 
-  @column()
+  @column() 
   public email: string
 
   @column()
@@ -21,8 +21,11 @@ export default class User extends BaseModel {
   @column()
   public nivel: string
 
+  @column.date()
+  public datanascimento: DateTime
+
   @column()
-  public datanascimento: Date
+  public cadastradoemsala: Boolean
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
