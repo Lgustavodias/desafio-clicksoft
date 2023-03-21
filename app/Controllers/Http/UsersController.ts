@@ -94,8 +94,3 @@ export default class UsersController {
     return ('Você não tem permissão para excluir este usuário')
   }
 }
-/*controle de nivel pronto:
-const use = auth.user
-if (use?.nivel !== 'professor') {
-  return response.unauthorized({ error: 'You do not have permission to edit the database.' })
-}*/

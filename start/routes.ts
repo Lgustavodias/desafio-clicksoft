@@ -23,4 +23,6 @@ Route.get('dashboard', async ({ auth }) => {
 
 Route.resource('users', 'UsersController')
 Route.resource('salas', 'SalasController')
+Route.resource('user_salas', 'UserSalasController')
+
 
