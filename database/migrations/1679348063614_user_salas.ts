@@ -7,6 +7,7 @@ export default class extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
       table.integer('id_professor')
+      table.string('nome_professor')
       table.integer('id_aluno')
       table.integer('id_sala')
 
